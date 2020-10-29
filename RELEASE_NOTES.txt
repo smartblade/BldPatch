@@ -1,0 +1,13 @@
+=======================================
+Mystery of Blade patch
+=======================================
+
+This is binary patch for "Severance: Blade of Darkness" game. It based on
+source code from https://github.com/smartblade/BldMystery
+
+You can contribute to Blade of Darkness source code recovery project by
+creating a pull request on https://github.com/smartblade/BldMystery/pulls
+
+---------------------------------------------------------------------
+Release 1.20.0
+---------------------------------------------------------------------

@@ -19,6 +19,7 @@ build_script:
 - msbuild %NOSAFESEH% /p:Configuration=Debug /p:Platform=Win32 Mss32dummy.sln
 - msbuild %NOSAFESEH% /p:Platform=Win32 src/BOD.sln
 - msbuild %NOSAFESEH% /p:Platform=Win32 tests/UnitTests.sln
+- make_setup.bat
 test_script:
 - tests\%CONFIGURATION%\UnitTests.exe
 for:
@@ -29,9 +30,12 @@ for:
   build_script:
   - msbuild %NOSAFESEH% /p:Configuration=Debug /p:Platform=Win32 Mss32dummy.sln
   - msbuild %NOSAFESEH% /p:Platform=Win32 src/BOD.sln
+  - make_setup.bat
   test_script:
   - echo 'There is no tests for %CONFIGURATION% configuration'
 artifacts:
+- path: install/*.exe
+  name: Blade of Darkness patch installer
 - path: install/bin/*.exe
   name: Blade of Darkness main executable
 - path: install/bin/**/*.dll
