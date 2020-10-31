@@ -80,7 +80,7 @@ BLOCK "StringFileInfo"
     {
         VALUE "Comments", ""
         VALUE "CompanyName", "Rebel Act Studios"
-        VALUE "FileDescription", "Blade"
+        VALUE "FileDescription", "Blade of Mystery patch"
         VALUE "FileVersion", "1, 0, 0, 1"
         VALUE "InternalName", "Blade"
         VALUE "LegalCopyright", "Copyright © 2001 Rebel Act Studios"
