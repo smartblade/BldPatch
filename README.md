@@ -6,5 +6,8 @@
 # Mystery of Blade patch
 `Mystery of Blade patch` project is bug fixes for `Severance: Blade of Darkness` binaries.
 It based on source code from [Mystery of Blade](https://github.com/smartblade/BldMystery).
-# Install
-TODO how to install
+# Requirements
+The game should be installed. Patch v1.01 is required.
+# Installing
+Run the installer downloaded from [Github](https://github.com/smartblade/BldPatch/releases). You need to choose directory with `Blade of Darkness`
+files.
