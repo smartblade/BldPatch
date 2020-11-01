@@ -11,3 +11,6 @@ creating a pull request on https://github.com/smartblade/BldMystery/pulls
 ---------------------------------------------------------------------
 Release 1.20.0
 ---------------------------------------------------------------------
+
+Climbing interruption bug (https://github.com/smartblade/BldPatch/issues/1) was
+fixed.
