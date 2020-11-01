@@ -170,7 +170,7 @@ int TestClimb(B_Entity *entity, unsigned int eventIndex)
                     climbingData->leftPos = leftHandPos;
                     climbingData->rightPos = rightHandPos;
                     climbingData->height = climbH;
-                    climbing_data_list.Append(climbingData);
+                    SetClimbingData(climbingData);
                     if (!stricmp(personEntity->per.animName.String(), "Rlx"))
                     {
                         personEntity->per.LaunchAnimation(
@@ -237,7 +237,7 @@ int TestClimb(B_Entity *entity, unsigned int eventIndex)
             climbingData->leftPos = leftHandPos;
             climbingData->rightPos = rightHandPos;
             climbingData->height = climbH;
-            climbing_data_list.Append(climbingData);
+            SetClimbingData(climbingData);
             if (!stricmp(personEntity->per.animName.String(), "Rlx"))
             {
                 personEntity->per.LaunchAnimation(
@@ -307,7 +307,7 @@ int TestClimb(B_Entity *entity, unsigned int eventIndex)
             climbingData->rightPos = topFloorPos + leanRelPos;
             climbingData->leftPos = climbingData->rightPos;
             climbingData->height = climbH;
-            climbing_data_list.Append(climbingData);
+            SetClimbingData(climbingData);
             if (!stricmp(personEntity->per.animName.String(), "Rlx"))
             {
                 personEntity->per.LaunchAnimation(
@@ -329,4 +329,15 @@ int TestClimb(B_Entity *entity, unsigned int eventIndex)
         }
     }
     return false;
+}
+
+void SetClimbingData(B_ClimbingData *climbingData)
+{
+    int foundedIndex = climbing_data_list.FindItemIndex(climbingData->Id());
+    // If previous climbing was interrupted then we should remove existing data
+    if (foundedIndex != -1)
+    {
+        climbing_data_list.Remove(foundedIndex, true);
+    }
+    climbing_data_list.Append(climbingData);
 }

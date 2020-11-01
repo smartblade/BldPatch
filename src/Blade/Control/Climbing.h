@@ -39,6 +39,7 @@ int FindEndPos(
     const B_Vector &leftHandPos, const B_Vector &rightHandPos,
     B_Vector *topPersonPos);
 int TestClimb(B_Entity *entity, unsigned int eventIndex);
+void SetClimbingData(B_ClimbingData *climbingData);
 
 /*
 * Module:                 Blade.exe
