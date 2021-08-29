@@ -84,8 +84,8 @@ void set_flags(long flags) {
 * Entry point:            0x10003612
 */
 
-void set_video_settings(float gamma, float contrast, float brightness) {
-        B_3D_raster_device->set_video_settings(
+void SetVideoSettings(float gamma, float contrast, float brightness) {
+        B_3D_raster_device->SetVideoSettings(
                 gamma, contrast, brightness
         );
 }
@@ -156,8 +156,8 @@ float get_brightness() {
 * Entry point:            0x100036C0
 */
 
-void set_text_mode(int text_mode) {
-        B_3D_raster_device->set_text_mode(text_mode);
+void SetTextMode(int text_mode) {
+        B_3D_raster_device->SetTextMode(text_mode);
 }
 
 
@@ -166,8 +166,8 @@ void set_text_mode(int text_mode) {
 * Entry point:            0x100036DD
 */
 
-int get_text_mode() {
-        return B_3D_raster_device->get_text_mode();
+int GetTextMode() {
+        return B_3D_raster_device->GetTextMode();
 }
 
 
@@ -176,8 +176,8 @@ int get_text_mode() {
 * Entry point:            0x100036F5
 */
 
-void set_text_scale(float scale_x, float scale_y) {
-        B_3D_raster_device->set_text_scale(scale_x, scale_y);
+void SetTextScale(float scale_x, float scale_y) {
+        B_3D_raster_device->SetTextScale(scale_x, scale_y);
 }
 
 
@@ -186,8 +186,8 @@ void set_text_scale(float scale_x, float scale_y) {
 * Entry point:            0x10003716
 */
 
-void get_text_scale(float &scale_x, float &scale_y) {
-        B_3D_raster_device->get_text_scale(scale_x, scale_y);
+void GetTextScale(float &scale_x, float &scale_y) {
+        B_3D_raster_device->GetTextScale(scale_x, scale_y);
 }
 
 
@@ -196,8 +196,8 @@ void get_text_scale(float &scale_x, float &scale_y) {
 * Entry point:            0x10003737
 */
 
-void line(int x1, int y1, int x2, int y2) {
-        B_3D_raster_device->line(x1, y1, x2, y2);
+void Line(int x1, int y1, int x2, int y2) {
+        B_3D_raster_device->Line(x1, y1, x2, y2);
 }
 
 
@@ -206,8 +206,8 @@ void line(int x1, int y1, int x2, int y2) {
 * Entry point:            0x10003760
 */
 
-void line_to(int x, int y) {
-        B_3D_raster_device->line_to(x, y);
+void LineTo(int x, int y) {
+        B_3D_raster_device->LineTo(x, y);
 }
 
 
@@ -216,8 +216,8 @@ void line_to(int x, int y) {
 * Entry point:            0x10003781
 */
 
-void rectangle(int x1, int y1, int x2, int y2) {
-        B_3D_raster_device->rectangle(x1, y1, x2, y2);
+void Rectangle(int x1, int y1, int x2, int y2) {
+        B_3D_raster_device->Rectangle(x1, y1, x2, y2);
 }
 
 
@@ -236,8 +236,8 @@ void solid_rectangle(int x1, int y1, int x2, int y2) {
 * Entry point:            0x100037D3
 */
 
-void set_position(float x, float y) {
-        B_3D_raster_device->set_position(x, y);
+void SetPosition(float x, float y) {
+        B_3D_raster_device->SetPosition(x, y);
 }
 
 
@@ -246,8 +246,8 @@ void set_position(float x, float y) {
 * Entry point:            0x100037F4
 */
 
-void get_position(float &x, float &y) {
-        B_3D_raster_device->get_position(x, y);
+void GetPosition(float &x, float &y) {
+        B_3D_raster_device->GetPosition(x, y);
 }
 
 
@@ -316,9 +316,9 @@ float get_text_blur_alpha() {
 * Entry point:            0x100038D3
 */
 
-void set_text_blur(int unknown1, int unknown2, int unknown3, int unknown4) {
-        B_3D_raster_device->set_text_blur(
-                unknown1, unknown2, unknown3, unknown4
+void SetTextBlur(int blurLeft, int blurTop, int blurRight, int blurBottom) {
+        B_3D_raster_device->SetTextBlur(
+                blurLeft, blurTop, blurRight, blurBottom
         );
 }
 
@@ -328,11 +328,11 @@ void set_text_blur(int unknown1, int unknown2, int unknown3, int unknown4) {
 * Entry point:            0x100038FC
 */
  
-void get_text_blur(
-        int &unknown1, int &unknown2, int &unknown3, int &unknown4
+void GetTextBlur(
+        int &blurLeft, int &blurTop, int &blurRight, int &blurBottom
 ) {
-        B_3D_raster_device->get_text_blur(
-                unknown1, unknown2, unknown3, unknown4
+        B_3D_raster_device->GetTextBlur(
+                blurLeft, blurTop, blurRight, blurBottom
         );
 }
 
@@ -342,8 +342,8 @@ void get_text_blur(
 * Entry point:            0x10003925
 */
 
-void set_text_shadow(int x_shadow, int y_shadow) {
-         B_3D_raster_device->set_text_shadow(x_shadow, y_shadow);
+void SetTextShadow(int x_shadow, int y_shadow) {
+         B_3D_raster_device->SetTextShadow(x_shadow, y_shadow);
 }
 
 
@@ -352,8 +352,8 @@ void set_text_shadow(int x_shadow, int y_shadow) {
 * Entry point:            0x10003946
 */
 
-void get_text_shadow(int &x_shadow, int &y_shadow) {
-        B_3D_raster_device->get_text_shadow(x_shadow, y_shadow);
+void GetTextShadow(int &x_shadow, int &y_shadow) {
+        B_3D_raster_device->GetTextShadow(x_shadow, y_shadow);
 }
 
 
@@ -412,8 +412,8 @@ int write_text(const char *text) {
 * Entry point:            0x100039F5
 */
 
-void sys_write(int x, int y, const char *text, byte r, byte g, byte b) {
-        B_3D_raster_device->sys_write(x, y, text, r, g, b);
+void SysWrite(int x, int y, const char *text, byte r, byte g, byte b) {
+        B_3D_raster_device->SysWrite(x, y, text, r, g, b);
 }
 
 
@@ -497,8 +497,8 @@ void set_clip_window(int x, int y, int w, int h) {
 * Entry point:            0x10003B29
 */
 
-void get_clip_window(int &x, int &y, int &w, int &h) {
-        B_3D_raster_device->get_clip_window(x, y, w, h);
+void GetClipWindow(int &x, int &y, int &w, int &h) {
+        B_3D_raster_device->GetClipWindow(x, y, w, h);
 }
 
 
@@ -507,8 +507,8 @@ void get_clip_window(int &x, int &y, int &w, int &h) {
 * Entry point:            0x10003B52
 */
 
-int set_raster_parameter(const char *parameter, const char *value) {
-        return B_3D_raster_device->set_raster_parameter(parameter, value);
+int SetRasterParameter(const char *parameter, const char *value) {
+        return B_3D_raster_device->SetRasterParameter(parameter, value);
 }
 
 
@@ -517,8 +517,8 @@ int set_raster_parameter(const char *parameter, const char *value) {
 * Entry point:            0x10003B73
 */
 
-const char *get_raster_parameter(const char *parameter) {
-        return B_3D_raster_device->get_raster_parameter(parameter);
+const char *GetRasterParameter(const char *parameter) {
+        return B_3D_raster_device->GetRasterParameter(parameter);
 }
 
 
@@ -537,8 +537,8 @@ void set_clip_active(int clip_active) {
 * Entry point:            0x10003BAD
 */
 
-int get_clip_active() {
-        return B_3D_raster_device->get_clip_active();
+int GetClipActive() {
+        return B_3D_raster_device->GetClipActive();
 }
 
 
@@ -547,8 +547,8 @@ int get_clip_active() {
 * Entry point:            0x10003BC5
 */
 
-void get_size(int &w, int &h) {
-        B_3D_raster_device->get_size(w, h);
+void GetSize(int &w, int &h) {
+        B_3D_raster_device->GetSize(w, h);
 }
 
 
@@ -567,8 +567,8 @@ int set_window_size(int w, int h) {
 * Entry point:            0x10003C07
 */
 
-int get_window_size(int &w, int &h) {
-        return B_3D_raster_device->get_window_size(w, h);
+int GetWindowSize(int &w, int &h) {
+        return B_3D_raster_device->GetWindowSize(w, h);
 }
 
 
@@ -577,8 +577,8 @@ int get_window_size(int &w, int &h) {
 * Entry point:            0x10003C28
 */
 
-int full_screen() {
-        return B_3D_raster_device->full_screen();
+int FullScreen() {
+        return B_3D_raster_device->FullScreen();
 }
 
 
@@ -628,12 +628,12 @@ int set_video_mode(int mode_index) {
 * Entry point:            0x10003CCE
 */
 
-int get_current_mode(
-        int &unknown1, int &unknown2, int &unknown3, int &unknown4,
+int GetCurrentMode(
+        int &unknown1, int &w, int &h, int &unknown4,
         int &unknown5
 ) {
-        return B_3D_raster_device->get_current_mode(
-                unknown1, unknown2, unknown3, unknown4, unknown5
+        return B_3D_raster_device->GetCurrentMode(
+                unknown1, w, h, unknown4, unknown5
         );
 }
 
@@ -653,8 +653,8 @@ const char *class_id_name() {
 * Entry point:            0x10003D13
 */
 
-void set_font(long font_pointer) {
-        B_3D_raster_device->set_font(font_pointer);
+void SetFont(long font_pointer) {
+        B_3D_raster_device->SetFont(INT_TO_PTR(font_pointer, B_Font));
 }
 
 
@@ -663,8 +663,8 @@ void set_font(long font_pointer) {
 * Entry point:            0x10003D30
 */
 
-void set_dome_color(byte r, byte g, byte b) {
-        B_3D_raster_device->set_dome_color(r, g, b);
+void SetDomeColor(byte r, byte g, byte b) {
+        B_3D_raster_device->SetDomeColor(r, g, b);
 }
 
 
@@ -673,8 +673,8 @@ void set_dome_color(byte r, byte g, byte b) {
 * Entry point:            0x10003D54
 */
 
-void get_dome_color(byte &r, byte &g, byte &b) {
-        B_3D_raster_device->get_dome_color(r, g, b);
+void GetDomeColor(byte &r, byte &g, byte &b) {
+        B_3D_raster_device->GetDomeColor(r, g, b);
 }
 
 
@@ -683,6 +683,6 @@ void get_dome_color(byte &r, byte &g, byte &b) {
 * Entry point:            0x10003DA6
 */
 
-void unify_render_buffers() {
-        B_3D_raster_device->unify_render_buffers();
+void UnifyRenderBuffers() {
+        B_3D_raster_device->UnifyRenderBuffers();
 }

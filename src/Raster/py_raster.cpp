@@ -404,7 +404,7 @@ PyObject *raster_SetVideoSettings(PyObject *self, PyObject *args) {
         ))
                 return NULL;
 
-        set_video_settings(gamma, contrast, brightness);
+        SetVideoSettings(gamma, contrast, brightness);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -440,7 +440,7 @@ PyObject *raster_SetTextMode(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "i:SetTextMode", &text_mode))
                 return NULL;
 
-        set_text_mode(text_mode);
+        SetTextMode(text_mode);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -458,7 +458,7 @@ PyObject *raster_GetTextMode(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetTextMode"))
                 return NULL;
 
-        text_mode = get_text_mode();
+        text_mode = GetTextMode();
 
         return Py_BuildValue("i", text_mode);
 }
@@ -475,7 +475,7 @@ PyObject *raster_Line(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "iiii:Line", &x1, &y1, &x2, &y2))
                 return NULL;
 
-        line(x1, y1, x2, y2);
+        Line(x1, y1, x2, y2);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -493,7 +493,7 @@ PyObject *raster_LineTo(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "ii:LineTo", &x, &y))
                 return NULL;
 
-        line_to(x, y);
+        LineTo(x, y);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -511,7 +511,7 @@ PyObject *raster_Rectangle(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "iiii:Rectangle", &x1, &y1, &x2, &y2))
                 return NULL;
 
-        rectangle(x1, y1, x2, y2);
+        Rectangle(x1, y1, x2, y2);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -547,7 +547,7 @@ PyObject *raster_SetPosition(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "ff:SetPosition", &x, &y))
                 return NULL;
 
-        set_position(x, y);
+        SetPosition(x, y);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -566,7 +566,7 @@ PyObject *raster_GetPosition(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetPosition"))
                 return NULL;
 
-        get_position(x, y);
+        GetPosition(x, y);
 
         Py_INCREF(Py_None);
         posObj = Py_None;
@@ -660,7 +660,7 @@ PyObject *raster_SetTextShadow(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "ii:SetTextShadow", &x_shadow, &y_shadow))
                 return NULL;
 
-        set_text_shadow(x_shadow, y_shadow);
+        SetTextShadow(x_shadow, y_shadow);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -679,7 +679,7 @@ PyObject *raster_GetTextShadow(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetTextShadow"))
                 return NULL;
 
-        get_text_shadow(x_shadow, y_shadow);
+        GetTextShadow(x_shadow, y_shadow);
 
         Py_INCREF(Py_None);
         shadowObj = Py_None;
@@ -800,15 +800,15 @@ PyObject *raster_GetTextBlurAlpha(PyObject *self, PyObject *args) {
 */
 
 PyObject *raster_SetTextBlur(PyObject *self, PyObject *args) {
-        int unknown1, unknown2, unknown3, unknown4;
+        int blurLeft, blurTop, blurRight, blurBottom;
 
         if (!PyArg_ParseTuple(
-                args, "iiii:SetTextBlur", &unknown1, &unknown2, &unknown3,
-                &unknown4
+                args, "iiii:SetTextBlur", &blurLeft, &blurTop, &blurRight,
+                &blurBottom
         ))
                 return NULL;
 
-        set_text_blur(unknown1, unknown2, unknown3, unknown4);
+        SetTextBlur(blurLeft, blurTop, blurRight, blurBottom);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -822,28 +822,28 @@ PyObject *raster_SetTextBlur(PyObject *self, PyObject *args) {
 
 PyObject *raster_GetTextBlur(PyObject *self, PyObject *args) {
         PyObject *textBlurObj;
-        PyObject *unknown1Obj, *unknown2Obj, *unknown3Obj, *unknown4Obj;
-        int unknown1, unknown2, unknown3, unknown4;
+        PyObject *blurLeftObj, *blurTopObj, *blurRightObj, *blurBottomObj;
+        int blurLeft, blurTop, blurRight, blurBottom;
 
         if (!PyArg_ParseTuple(args, ":GetTextBlur"))
                 return NULL;
 
-        get_text_blur(unknown1, unknown2, unknown3, unknown4);
+        GetTextBlur(blurLeft, blurTop, blurRight, blurBottom);
 
         Py_INCREF(Py_None);
         textBlurObj = Py_None;
 
-        unknown1Obj = PyInt_FromLong(unknown1);
-        textBlurObj = add_item(textBlurObj, unknown1Obj);
+        blurLeftObj = PyInt_FromLong(blurLeft);
+        textBlurObj = add_item(textBlurObj, blurLeftObj);
 
-        unknown2Obj = PyInt_FromLong(unknown2);
-        textBlurObj = add_item(textBlurObj, unknown2Obj);
+        blurTopObj = PyInt_FromLong(blurTop);
+        textBlurObj = add_item(textBlurObj, blurTopObj);
 
-        unknown3Obj = PyInt_FromLong(unknown3);
-        textBlurObj = add_item(textBlurObj, unknown3Obj);
+        blurRightObj = PyInt_FromLong(blurRight);
+        textBlurObj = add_item(textBlurObj, blurRightObj);
 
-        unknown4Obj = PyInt_FromLong(unknown4);
-        textBlurObj = add_item(textBlurObj, unknown4Obj);
+        blurBottomObj = PyInt_FromLong(blurBottom);
+        textBlurObj = add_item(textBlurObj, blurBottomObj);
 
         return textBlurObj;
 }
@@ -860,7 +860,7 @@ PyObject *raster_SetTextScale(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "ff:SetTextScale", &scale_x, &scale_y))
                 return NULL;
 
-        set_text_scale(scale_x, scale_y);
+        SetTextScale(scale_x, scale_y);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -879,7 +879,7 @@ PyObject *raster_GetTextScale(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetTextScale"))
                 return NULL;
 
-        get_text_scale(scale_x, scale_y);
+        GetTextScale(scale_x, scale_y);
 
         Py_INCREF(Py_None);
         textScaleObj = Py_None;
@@ -927,7 +927,7 @@ PyObject *raster_SysWrite(PyObject *self, PyObject *args) {
         ))
                 return NULL;
 
-        sys_write(x, y, text, r, g, b);
+        SysWrite(x, y, text, r, g, b);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -1072,7 +1072,7 @@ PyObject *raster_GetClipWindow(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetClipWindow"))
                 return NULL;
 
-        get_clip_window(x, y, w, h);
+        GetClipWindow(x, y, w, h);
 
         Py_INCREF(Py_None);
         clipWindowObj = Py_None;
@@ -1122,7 +1122,7 @@ PyObject *raster_GetClipActive(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetClipActive"))
                 return NULL;
 
-        clip_active = get_clip_active(); 
+        clip_active = GetClipActive();
 
         return Py_BuildValue("i", clip_active);
  }
@@ -1142,7 +1142,7 @@ PyObject *raster_SetRasterParameter(PyObject *self, PyObject *args) {
         ))
                 return NULL;
 
-        code = set_raster_parameter(parameter, value);
+        code = SetRasterParameter(parameter, value);
 
         return Py_BuildValue("i", code);
 }
@@ -1159,7 +1159,7 @@ PyObject *raster_GetRasterParameter(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "s:GetRasterParameter", &parameter))
                 return NULL;
 
-        value = get_raster_parameter(parameter);
+        value = GetRasterParameter(parameter);
 
         return Py_BuildValue("s", value);
 }
@@ -1176,7 +1176,7 @@ PyObject *raster_SetFont(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "l:SetFont", &font_pointer))
                 return NULL;
 
-        set_font(font_pointer);
+        SetFont(font_pointer);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -1195,7 +1195,7 @@ PyObject *raster_GetSize(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetSize"))
                 return NULL;
 
-        get_size(w, h);
+        GetSize(w, h);
 
         Py_INCREF(Py_None);
         sizeObj = Py_None;
@@ -1242,7 +1242,7 @@ PyObject *raster_GetWindowSize(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetWindowSize"))
                 return NULL;
 
-        code = get_window_size(w, h);
+        code = GetWindowSize(w, h);
 
         sizeObj = Py_BuildValue("i", code);
 
@@ -1267,7 +1267,7 @@ PyObject *raster_FullScreen(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":FullScreen"))
                 return NULL;
 
-        code = full_screen();
+        code = FullScreen();
 
         return Py_BuildValue("i", code);
 }
@@ -1351,16 +1351,16 @@ PyObject *raster_SetVideoMode(PyObject *self, PyObject *args) {
 */
 
 PyObject *raster_GetCurrentMode(PyObject *self, PyObject *args) {
-        PyObject *curModeObj, *unknown1Obj, *unknown2Obj, *unknown3Obj;
+        PyObject *curModeObj, *unknown1Obj, *wObj, *hObj;
         PyObject *unknown4Obj, *unknown5Obj;
-        int unknown1, unknown2, unknown3, unknown4, unknown5;
+        int unknown1, w, h, unknown4, unknown5;
         int code;
 
         if (!PyArg_ParseTuple(args, ":GetCurrentMode"))
                 return NULL;
 
-        code = get_current_mode(
-                unknown1, unknown2, unknown3, unknown4, unknown5
+        code = GetCurrentMode(
+                unknown1, w, h, unknown4, unknown5
         );
 
         curModeObj = Py_BuildValue("i", code);
@@ -1368,11 +1368,11 @@ PyObject *raster_GetCurrentMode(PyObject *self, PyObject *args) {
         unknown1Obj = PyInt_FromLong(unknown1);
         curModeObj = add_item(curModeObj, unknown1Obj);
 
-        unknown2Obj = PyInt_FromLong(unknown2);
-        curModeObj = add_item(curModeObj, unknown2Obj);
+        wObj = PyInt_FromLong(w);
+        curModeObj = add_item(curModeObj, wObj);
 
-        unknown3Obj = PyInt_FromLong(unknown3);
-        curModeObj = add_item(curModeObj, unknown3Obj);
+        hObj = PyInt_FromLong(h);
+        curModeObj = add_item(curModeObj, hObj);
 
         unknown4Obj = PyInt_FromLong(unknown4);
         curModeObj = add_item(curModeObj, unknown4Obj);
@@ -1412,7 +1412,7 @@ PyObject *raster_SetDomeColor(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "iii:SetDomeColor", &r, &g, &b))
                 return NULL;
 
-        set_dome_color(r, g, b);
+        SetDomeColor(r, g, b);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -1431,7 +1431,7 @@ PyObject *raster_GetDomeColor(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetDomeColor"))
                 return NULL;
 
-        get_dome_color(r, g, b);
+        GetDomeColor(r, g, b);
 
         Py_INCREF(Py_None);
         domeColorObj = Py_None;
@@ -1459,7 +1459,7 @@ PyObject *raster_UnifyRenderBuffers(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":UnifyRenderBuffers"))
                 return NULL;
 
-        unify_render_buffers();
+        UnifyRenderBuffers();
 
         Py_INCREF(Py_None);
         return Py_None;

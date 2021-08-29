@@ -1505,7 +1505,7 @@ int SetActionCameraMovement(
 * Entry point:            0x0042ABBA
 */
 
-int SetRootWidget(long int widget)
+int SetRootWidget(B_Widget *widget)
 {
     B_App *App = GetApplication();
     assert(App);
@@ -1519,11 +1519,11 @@ int SetRootWidget(long int widget)
 * Entry point:            0x0042ABF6
 */
 
-long int GetRootWidget()
+B_Widget *GetRootWidget()
 {
     B_App *App = GetApplication();
     assert(App);
-    long int rootWidget = App->rootWidget;
+    B_Widget *rootWidget = App->rootWidget;
     return rootWidget;
 }
 
@@ -1853,8 +1853,8 @@ int SetShowAreas(int action_areas_bit_mask)
 int WriteText(double x, double y, const char *text)
 {
     int w, h;
-    B_3D_raster_device->get_size(w, h);
-    B_3D_raster_device->set_position((w / 2) + w * x, (h / 2) + w * y);
+    B_3D_raster_device->GetSize(w, h);
+    B_3D_raster_device->SetPosition((w / 2) + w * x, (h / 2) + w * y);
     B_3D_raster_device->write_text(text);
     return 0;
 }

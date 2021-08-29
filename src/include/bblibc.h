@@ -16,8 +16,10 @@ class LIB_EXP B_Color {
 public:
     B_Color();
     B_Color(byte r, byte g, byte b);
+    B_Color operator *(float coef) const;
+    B_Color &operator =(const B_Color &that);
     virtual void MakeCons();
-private:
+
     byte r, g, b;
 };
 
@@ -165,6 +167,8 @@ class LIB_EXP B_BitMap24
 public:
     B_BitMap24(int width = 0, int height = 0);
     virtual ~B_BitMap24();
+    int SaveToBMP(char const *fileName) const;
+    int SaveToBMPSized(char const *fileName, int width, int height) const;
 
     unsigned int dimension1;
     unsigned int dimension2;

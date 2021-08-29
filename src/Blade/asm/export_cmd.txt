@@ -110,7 +110,6 @@
 /EXPORT:GetEntitiesAt
 /EXPORT:GetEntitiesVisibleFrom
 /EXPORT:GetObjectEntitiesVisibleFrom
-/EXPORT:GetEnemiesVisibleFrom
 /EXPORT:SetCombos
 /EXPORT:GetCombos
 /EXPORT:GetWeaponCombos
@@ -193,7 +192,6 @@
 /EXPORT:RemoveFromInventRight
 /EXPORT:RemoveFromInventLeft
 /EXPORT:RemoveFromInventLeft2
-/EXPORT:CanISee
 /EXPORT:CanISeeFrom
 /EXPORT:SetActiveEnemy
 /EXPORT:ExcludeHitFor

@@ -1,6 +1,6 @@
 
 #include <BWorld/BWorld.h>
-#include "Polygon.h"
+#include <AnalyticGeometry/Polygon.h>
 #include <bld_abstract_net.h>
 #include <Control/anim.h>
 #include <NetMod/libnet.h>
@@ -39,6 +39,7 @@ public:
 class B_ProcTexture
 {
 public:
+    static void SetTime(double time);
     virtual ~B_ProcTexture();
     void Update();
 
@@ -56,7 +57,8 @@ public:
 
 struct B_CharSize
 {
-    char unknown_fields[8];
+    float x;
+    float y;
     float width;
     float height;
 };
@@ -64,13 +66,13 @@ struct B_CharSize
 class B_CharData
 {
 public:
-    B_CharSize charSize[255];
+    B_CharSize charSize[256];
 };
 
-class B_Font
+class B_Font : public B_NamedObj
 {
 public:
-    char unknown_fields[40];
+    char unknown_fields[28];
     B_CharData *charData;
 };
 
@@ -156,6 +158,36 @@ extern B_Name *gbl_map_name;
 * Data address:           0x005DFB58
 */
 extern B_Name *gbl_combustion_particle_names;
+
+/*
+* Module:                 Blade.exe
+* Data address:           0x005DFB90
+*/
+extern float frameUpdateTime;
+
+/*
+* Module:                 Blade.exe
+* Data address:           0x005DFB94
+*/
+extern float worldUpdateTime;
+
+/*
+* Module:                 Blade.exe
+* Data address:           0x005DFB9C
+*/
+extern int unknown005DFB9C;
+
+/*
+* Module:                 Blade.exe
+* Data address:           0x005DFBA4
+*/
+extern int unknown005DFBA4;
+
+/*
+* Module:                 Blade.exe
+* Data address:           0x005DFBA8
+*/
+extern int unknown005DFBA8;
 
 /*
 * Module:                 Blade.exe

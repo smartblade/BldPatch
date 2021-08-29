@@ -6,27 +6,27 @@
 #include "bld_misc_funcs.h"
 
 
-/* File:                  Matrix.cpp */
+/* File:                  AnalyticGeometry/Matrix.cpp */
 /* Begin of file:         0x00404BE0 */
 /* End of file:           0x00407B50 */
 
-/* File:                  Plane.cpp */
+/* File:                  AnalyticGeometry/Plane.cpp */
 /* Begin of file:         0x00407B50 */
 /* End of file:           0x00407E80 */
 
 
 
-/* File:                  Polygon.cpp */
+/* File:                  AnalyticGeometry/Polygon.cpp */
 /* Begin of file:         0x00408270 */
 /* End of file:           0x00409C20 */
 
 
 
-/* File:                  Vector.cpp */
+/* File:                  AnalyticGeometry/Vector.cpp */
 /* Begin of file:         0x0040A2A0 */
 /* End of file:           0x0040AD10 */
 
-/* File:                  Location.cpp */
+/* File:                  AnalyticGeometry/Location.cpp */
 /* Begin of file:         0x0040AD10 */
 /* End of file:           0x0040B560 */
 
@@ -93,7 +93,9 @@ void JumpCB(const B_Name &action, float time, float, void *)
 
 /* End of file:           0x004246C0 */
 
-
+/* File:                  App/stats.cpp */
+/* Begin of file:         0x004246C0 */
+/* End of file:           0x00427750 */
 
 /* File:                  CDExt.cpp */
 /* Begin of file:         0x00427750 */
@@ -140,29 +142,18 @@ light_t * read_light(B_IDataFile *file)
 
 /* End of file:           0x0044D320 */
 
+/* File:                  BWorld/MapTexture.cpp */
+/* Begin of file:         0x0044D320 */
+/* End of file:           0x0044DA20 */
+
 
 
 /* File:                  BWorld/MaterialExt.cpp */
 /* Begin of file:         0x0044E9A0 */
 /* End of file:           0x0044ED90 */
 
+/* File:                  BWorld/OctTree.cpp */
 /* Begin of file:         0x0044ED90 */
-
-
-/*
-* Module:                 Blade.exe
-* Entry point:            0x00451A21
-* VC++ mangling:          ?unknown_00451A21@unknown_18F8_class@@QAEXPAXHH@Z
-*/
-
-#ifdef BLD_NATIVE
-
-void unknown_18F8_class::unknown_00451A21(void *, int, int)
-{
-}
-
-#endif
-
 /* End of file:           0x00453B10 */
 
 /* File:                  BWorld/Surface.cpp */
@@ -302,6 +293,10 @@ double B_ProcessorTimer::GetTime()
 /* End of file:           0x0048DE60 */
 
 
+
+/* File:                  Math/BLights.cpp */
+/* Begin of file:         0x00493610 */
+/* End of file:           0x00495240 */
 
 /* File:                  Math/BSpline.cpp */
 /* Begin of file:         0x00495240 */
@@ -486,6 +481,12 @@ B_ODataFile& operator <<(B_ODataFile &file, const B_Combustion &combustion)
 
 
 
+/* File:                  Entities/PersonEntity.cpp */
+/* Begin of file:         0x00531060 */
+/* End of file:           0x00544700 */
+
+
+
 /* File:                  Entities/SparkEntity.cpp */
 /* Begin of file:         0x005504E0 */
 /* End of file:           0x00552DF0 */
@@ -539,6 +540,17 @@ int unknown204::InsideAA(int AA)
 
 /* Begin of file:         0x005AA730 */
 
+
+/*
+* Module:                 Blade.exe
+* Entry point:            0x005AA730
+* VC++ mangling:          ?SetTime@B_ProcTexture@@SAXN@Z
+*/
+#ifdef BLD_NATIVE
+void B_ProcTexture::SetTime(double time)
+{
+}
+#endif
 
 /*
 * Module:                 Blade.exe
@@ -680,6 +692,11 @@ B_YSoundDev *unused_sound_ptr;
 int gbl_sound_device_id;
 B_Name *gbl_map_name;
 B_Name *gbl_combustion_particle_names;
+float frameUpdateTime;
+float worldUpdateTime;
+int unknown005DFB9C;
+int unknown005DFBA4;
+int unknown005DFBA8;
 B_World B_world;
 int gbl_action_areas_bit_mask;
 B_PtrArray<anim_t> gbl_anims;
