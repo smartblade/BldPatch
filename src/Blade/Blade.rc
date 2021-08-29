@@ -69,8 +69,8 @@ FONT 8, "MS Sans Serif"
 
 
 1 VERSIONINFO
-FILEVERSION 1,20,0,0
-PRODUCTVERSION 1,20,0,0
+FILEVERSION 1,20,1,0
+PRODUCTVERSION 1,20,1,0
 FILEOS 0x40004
 FILETYPE 0x1
 {
@@ -81,14 +81,14 @@ BLOCK "StringFileInfo"
         VALUE "Comments", ""
         VALUE "CompanyName", "Rebel Act Studios"
         VALUE "FileDescription", "Blade of Mystery patch"
-        VALUE "FileVersion", "1, 20, 0, 0"
+        VALUE "FileVersion", "1, 20, 1, 0"
         VALUE "InternalName", "Blade"
         VALUE "LegalCopyright", "Copyright © 2001 Rebel Act Studios"
         VALUE "LegalTrademarks", ""
         VALUE "OriginalFilename", "Blade.exe"
         VALUE "PrivateBuild", ""
         VALUE "ProductName", "Blade Of Darkness"
-        VALUE "ProductVersion", "1, 20, 0, 0"
+        VALUE "ProductVersion", "1, 20, 1, 0"
         VALUE "SpecialBuild", ""
     }
 }
