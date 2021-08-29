@@ -9,6 +9,15 @@ You can contribute to Blade of Darkness source code recovery project by
 creating a pull request on https://github.com/smartblade/BldMystery/pulls
 
 ---------------------------------------------------------------------
+Release 1.20.1
+---------------------------------------------------------------------
+
+Make it work on Windows 10 if Direct Play is disabled.
+
+Crash after intro video was fixed. Fake net interface was created to avoid it.
+Net game will not available in this case.
+
+---------------------------------------------------------------------
 Release 1.20.0
 ---------------------------------------------------------------------
 

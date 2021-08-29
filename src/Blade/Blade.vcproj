@@ -706,6 +706,10 @@
 					RelativePath="..\NetMod\net_ext.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\NetMod\NullNetInterface.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

@@ -1,5 +1,6 @@
 #include <NetMod/libnet.h>
 
+#include <NetMod/NullNetInterface.h>
 #include <bld_system.h>
 #include "bld_misc_funcs.h"
 
@@ -51,6 +52,7 @@ const char *GetServerMap()
 
 bool LoadNetModule(char *fileName)
 {
+    FILE *logFile = fopen("NetInterface.log", "wt");
     netLibrary = LoadLibrary(fileName);
     if (netLibrary != NULL)
     {
@@ -62,9 +64,22 @@ bool LoadNetModule(char *fileName)
         {
             netCallbacks = new B_NetCallbacks();
             gbl_net = getNetInterface(netCallbacks, netLibrary);
+            if (logFile)
+            {
+                fprintf(logFile, "%s was sucessfully loaded.\n", fileName);
+                fclose(logFile);
+            }
             return true;
         }
     }
+    if (logFile)
+    {
+        fprintf(logFile, "Failed to load %s.\n", fileName);
+        fprintf(logFile, "Net game is not available.\n");
+        fclose(logFile);
+    }
+    static B_NullNetInterface nullNetInterface;
+    gbl_net = &nullNetInterface;
     return false;
 }
 
