@@ -2,11 +2,15 @@
 #define BldPublisher "Blade Smart"
 #define BldURL "https://github.com/smartblade/BldMystery"
 #define BldExeName "Bin/Blade.exe"
+#define BldMajor
+#define BldMinor
+#define BldRelease
+#define BldBuild
 #define BldVersion() \
   ParseVersion( \
     "install/" + BldExeName, \
-    Local[0], Local[1], Local[2], Local[3]), \
-  Str(Local[0]) + "." + Str(Local[1]) + "." + Str(Local[2])
+    BldMajor, BldMinor, BldRelease, BldBuild), \
+  Str(BldMajor) + "." + Str(BldMinor) + "." + Str(BldRelease)
 #define BackupPath "BldMystery/bak/"
 
 [Setup]
@@ -55,11 +59,77 @@ InfoBeforeLabel=This will install {#BldName} version {#BldVersion} on your compu
 
 [Code]
 
-function NextButtonClick(CurPageID: Integer): Boolean;
+function BladeVersion(Major, Minor, Release: Cardinal): Cardinal;
+begin
+  Result := Release + Minor * 100 + Major * 10000;
+end;
+
+function GetBladeExeVersionNumbers(
+  ExePath: String; var Major, Minor, Release, Build: Cardinal): boolean;
 var
-  BladePatchMD5, DstFileMD5, BladeExePath: String;
+  MS, LS: Cardinal;
+begin
+  Result := GetVersionNumbers(ExePath, MS, LS);
+  if not Result then
+  begin
+    Exit;
+  end;
+  Major := MS shr 16;
+  Minor := MS and $FFFF;
+  Release := LS shr 16;
+  Build := LS and $FFFF;
+end;
+
+function GetBladeExeVersion(ExePath: String): Cardinal;
+var
+  Major, Minor, Release, Build: Cardinal;
+begin
+  if not GetBladeExeVersionNumbers(ExePath, Major, Minor, Release, Build) Then
+  begin
+    Result := 0;
+    Exit;
+  end;
+  Result := BladeVersion(Major, Minor, Release);
+end;
+
+function IsSupportedBinary(ExePath: String; var ErrorMessage: String): Boolean;
+var
+  BladePatchMD5, DstFileMD5: String;
+  Major, Minor, Release, Build: Cardinal;
 begin
 	BladePatchMD5 := 'd6af0d121e04e8482654789831501d2c';
+  DstFileMD5 := GetMD5OfFile(ExePath);
+  if DstFileMD5 = BladePatchMD5 then
+  begin
+    Result := True;
+    Exit;
+  end;
+  if GetBladeExeVersion(ExePath) >= BladeVersion(1, 20, 0) then
+  begin
+    if
+      GetBladeExeVersion(ExePath) <=
+      BladeVersion({#BldMajor}, {#BldMinor}, {#BldRelease}) then
+    begin
+      // Found previous version, we can update it.
+      Result := True;
+      Exit;
+    end;
+    GetBladeExeVersionNumbers(ExePath, Major, Minor, Release, Build);
+    ErrorMessage := Format(
+      'Newer version of the game was found: %d.%d.%d', [Major, Minor, Release]);
+    Result := False;
+    Exit;
+  end;
+  ErrorMessage :=
+    'Unsupported version of game.' #13
+    'Patch v1.0.1 should be installed.';
+  Result := False;
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+var
+  BladeExePath, ErrorMessage: String;
+begin
   case CurPageID of
     wpSelectDir, wpReady:
     begin
@@ -72,12 +142,9 @@ begin
         Result := False;
         Exit;
       end;
-      DstFileMD5 := GetMD5OfFile(BladeExePath);
-      if DstFileMD5 <> BladePatchMD5 then
+      if not IsSupportedBinary(BladeExePath, ErrorMessage) then
       begin
-        MsgBox(
-          'Unsupported version of game.' #13
-          'Patch v1.0.1 should be installed.', mbError, MB_OK);
+        MsgBox(ErrorMessage, mbError, MB_OK);
         Result := False;
         Exit;
       end;
