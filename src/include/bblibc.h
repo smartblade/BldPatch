@@ -82,8 +82,29 @@ public:
 };
 
 
-class LIB_EXP B_MessageChannel
+class LIB_EXP B_MessageChannel : public B_NamedObj
 {
+public:
+    virtual unsigned int Open();
+    virtual unsigned int Close();
+    virtual unsigned int Message(char const *message);
+private:
+    bool closed;
+};
+
+
+class B_ODataFile;
+
+class LIB_EXP B_ChannelOFile : public B_MessageChannel
+{
+public:
+    B_ChannelOFile(B_Name channelName, const char *fileName);
+    virtual unsigned int Open();
+    virtual unsigned int Close();
+    virtual unsigned int Message(char const *message);
+
+private:
+    B_ODataFile *file;
 };
 
 

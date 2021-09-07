@@ -210,6 +210,9 @@ bool B_WinApp::Start()
         }
         mout.Add(this->console);
         mout.OpenChannel("Salida");
+        B_ChannelOFile *logChannel = new B_ChannelOFile(
+            "ConsoleLog", "Console.log");
+        mout.Add(logChannel);
     }
     if (gbl_sound_device == NULL || !gbl_sound_device->init())
     {
