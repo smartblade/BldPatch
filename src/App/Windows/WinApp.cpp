@@ -711,6 +711,126 @@ LRESULT CALLBACK WindowProcedure(
 }
 
 
+#include <Dbghelp.h>
+#include <tchar.h>
+#include <shlobj.h>
+#include <tlhelp32.h>
+
+#define MAX_BUFF_SIZE 1024
+
+void MakeMinidump(PEXCEPTION_POINTERS e)
+{
+    HANDLE hFile = CreateFile(
+        "CrashDump.dmp",
+        GENERIC_WRITE,
+        FILE_SHARE_READ,
+        0,
+        CREATE_ALWAYS,
+        FILE_ATTRIBUTE_NORMAL,
+        0);
+    if(hFile == INVALID_HANDLE_VALUE)
+        return;
+    MINIDUMP_EXCEPTION_INFORMATION exceptionInfo;
+    exceptionInfo.ThreadId = GetCurrentThreadId();
+    exceptionInfo.ExceptionPointers = e;
+    exceptionInfo.ClientPointers = FALSE;
+    MiniDumpWriteDump(
+        GetCurrentProcess(),
+        GetCurrentProcessId(),
+        hFile,
+        MINIDUMP_TYPE(
+            MiniDumpWithIndirectlyReferencedMemory | MiniDumpScanMemory
+        ),
+        e ? &exceptionInfo : NULL,
+        NULL,
+        NULL);
+    if(hFile)
+    {
+        CloseHandle(hFile);
+        hFile = NULL;
+    }
+}
+
+BOOL ListProcessModules(FILE *logFile, DWORD dwPID)
+{
+    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
+    MODULEENTRY32 me32;
+    // Take a snapshot of all modules in the specified process.
+    hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwPID);
+    if (hModuleSnap == INVALID_HANDLE_VALUE)
+      return FALSE;
+    // Set the size of the structure before using it.
+    me32.dwSize = sizeof(MODULEENTRY32);
+    // Retrieve information about the first module,
+    // and exit if unsuccessful
+    if (!Module32First(hModuleSnap, &me32))
+    {
+        CloseHandle(hModuleSnap); // clean the snapshot object
+        return FALSE;
+    }
+    // Now walk the module list of the process,
+    // and display information about each module
+    do
+    {
+        fprintf(logFile, "\n MODULE NAME:     %s\n", me32.szModule);
+        fprintf(logFile, " Executable     = %s\n", me32.szExePath);
+        fprintf(logFile, " Process ID     = 0x%08X\n", me32.th32ProcessID);
+        fprintf(logFile, " Base address   = 0x%p\n", me32.modBaseAddr);
+        fprintf(logFile, " Base size      = 0x%08X\n", me32.modBaseSize);
+    }
+    while(Module32Next(hModuleSnap, &me32));
+
+    CloseHandle(hModuleSnap);
+    return TRUE;
+}
+
+
+LONG WINAPI AppExceptionFilter(PEXCEPTION_POINTERS exception)
+{
+    mout << "Got an unhandled exception\n";
+    FILE *logFile = fopen("crash.log", "wt");
+    if (logFile)
+    {
+        PEXCEPTION_RECORD exceptionRecord = exception->ExceptionRecord;
+        fprintf(
+            logFile,
+            "Got an unhandled 0x%08X exception at 0x%p\n",
+            exceptionRecord->ExceptionCode,
+            exceptionRecord->ExceptionAddress);
+        while (exceptionRecord->ExceptionRecord != NULL)
+        {
+            exceptionRecord = exceptionRecord->ExceptionRecord;
+            fprintf(
+                logFile,
+                "Nested 0x%08X exception at 0x%p\n",
+                exceptionRecord->ExceptionCode,
+                exceptionRecord->ExceptionAddress);
+        }
+        ListProcessModules(logFile, 0);
+        SYSTEMTIME stTime = {0};
+        GetSystemTime(&stTime);
+        fprintf(
+            logFile,
+            "\nCurrent time: %4d-%02d-%02d %02d:%02d:%02d\n",
+            stTime.wYear,
+            stTime.wMonth,
+            stTime.wDay,
+            stTime.wHour,
+            stTime.wMinute,
+            stTime.wSecond);
+        fclose(logFile);
+    }
+    MakeMinidump(exception);
+    B_WinApp *app = GetWinApplication();
+    if (app)
+    {
+        // Unacquire mouse
+        app->Mouse(false);
+    }
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+
+
 /*
 * Module:                 Blade.exe
 * Entry point:            0x00410CC2
@@ -722,6 +842,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     B_App *App;
     char *cmd;
     MSG msg;
+
+    SetUnhandledExceptionFilter(AppExceptionFilter);
 
     cmd = lpCmdLine;
 
