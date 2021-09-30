@@ -6,7 +6,15 @@ This is binary patch for "Severance: Blade of Darkness" game. It based on
 source code from https://github.com/smartblade/BldMystery
 
 You can contribute to Blade of Darkness source code recovery project by
-creating a pull request on https://github.com/smartblade/BldMystery/pulls
+creating a pull request on https://github.com/smartblade/BldMystery/pulls.
+There are still a lot of unrecovered functions. So any contribution is welcome.
+
+---------------------------------------------------------------------
+Release 1.20.2
+---------------------------------------------------------------------
+
+Crash at Marakamda level near the Temple Door
+(https://github.com/smartblade/BldPatch/issues/4) was fixed.
 
 ---------------------------------------------------------------------
 Release 1.20.1

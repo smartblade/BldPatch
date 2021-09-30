@@ -224,7 +224,9 @@ int B_TrisDevice::SplitLightenedEdges()
         this->currentPointLight->planeDist * 0.001;
     for (unsigned int i = 0; i < numEdges; i++)
     {
-        if (edge->light != this->currentPointLight)
+        if (
+            this->numEdges < (MAX_EDGES - 3) - 2 * numNewEdges &&
+            edge->light != this->currentPointLight)
         {
             float minSqrLightDist = min(
                 this->vertices[edge->firstVertexIndex].sqrLightDist,
