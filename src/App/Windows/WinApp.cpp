@@ -1,7 +1,7 @@
 
 #include <bld_system.h>
 #include <console.h>
-#include <raster_device.h>
+#include <Raster/RasterDevice.h>
 #include "BladeApp.h"
 #include "WinClock.h"
 #include "sound_device.h"
@@ -254,11 +254,11 @@ bool B_WinApp::Start()
     if (file.OK())
     {
         file >> bitMap;
-        B_3D_raster_device->cls(false, false, false);
+        B_3D_raster_device->ClsRGB(0, 0, 0);
         B_3D_raster_device->SetPosition(0.0f, 0.0f);
         B_3D_raster_device->draw_image(
             640, 480, "BGR", "Stretch", bitMap.data);
-        B_3D_raster_device->swap_buffers();
+        B_3D_raster_device->SwapBuffers();
         this->ProcessMessage();
     }
     if (gbl_sound_device == NULL ||
@@ -498,7 +498,7 @@ void B_WinApp::ReadArguments(const char *args)
 * Entry point:            0x00410640
 * VC++ mangling:          ?unknown_method010@B_WinApp@@UAEPAXPAX@Z
 */
-#ifdef BLD_NATIVE
+#ifndef BLD_NATIVE
 void *B_WinApp::unknown_method010(void *)
 {
     return NULL;
@@ -551,7 +551,7 @@ LRESULT B_WinApp::WindowProcedure(
             if (IsDedicatedServer())
                 break;
             if ((B_3D_raster_device != NULL) &&
-                (B_3D_raster_device->unknown22C() == 3))
+                (B_3D_raster_device->ClassId() == 3))
             {
                 break;
             }

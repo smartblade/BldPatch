@@ -4,12 +4,12 @@
 #define BBLIBC_H
 
 #include <bld_system.h>
-#include <bld_python.h>
 #include <fcntl.h>
 #include <export.h>
 #include <array.h>
 
 class B_3DRasterDevice;
+struct PyObject;
 
 
 class LIB_EXP B_Color {
@@ -29,6 +29,7 @@ class LIB_EXP B_Name
 public:
         B_Name();
         B_Name(const char* str);
+        B_Name(const B_Name &src);
         ~B_Name();
         B_Name &operator =(const B_Name &src);
         unsigned int operator ==(const char *str) const;
@@ -68,7 +69,7 @@ class B_ParticleGType : public B_NamedObj
 {
 public:
     virtual ~B_ParticleGType();
-    B_ParticleGType() : duration(0), bmp_handle(-1), operation_type(0)
+    B_ParticleGType() : duration(0), bmpHandle(-1), operation_type(0)
     {
     }
     B_ParticleGType(
@@ -77,7 +78,7 @@ public:
 public:
     array_t<B_ParticleElement> a00C;
     unsigned int duration;
-    int bmp_handle;
+    int bmpHandle;
     int operation_type;
 };
 
@@ -228,5 +229,6 @@ LIB_EXP int CheckErrors;
 
 LIB_EXP void OutputWin32Error(char const *message);
 LIB_EXP PyObject *CallPythonObject(PyObject *func, PyObject *args);
+LIB_EXP const char *GetConfigDirectory();
 
 #endif /* BBLIBC_H */

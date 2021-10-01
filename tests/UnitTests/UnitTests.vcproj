@@ -507,6 +507,34 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="rOpenGL"
+			>
+			<File
+				RelativePath=".\rOpenGL\AtmosphereTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\rOpenGL\EdgeTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\rOpenGL\OpenGLRasterDevice.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\rOpenGL\PointLightTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\rOpenGL\TriangleTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\rOpenGL\VertexTests.cpp"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

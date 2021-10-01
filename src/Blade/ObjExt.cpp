@@ -1,7 +1,7 @@
 
 #include <bld_system.h>
 #include <bld_python.h>
-#include <raster_device.h>
+#include <Raster/RasterDevice.h>
 #include "BladeApp.h"
 #include <Entities/CameraEntity.h>
 #include <Entities/PersonEntity.h>
@@ -252,7 +252,7 @@ void ReassignCombustionData()
 * Module:                 Blade.exe
 * Entry point:            0x004281D3
 */
-#ifdef BLD_NATIVE
+#ifndef BLD_NATIVE
 int SaveAnmRaceData(const char *file_name, const char *race)
 {
     int (*bld_proc)(const char *file_name, const char *race);
@@ -264,7 +264,7 @@ int SaveAnmRaceData(const char *file_name, const char *race)
 * Module:                 Blade.exe
 * Entry point:            0x0042857B
 */
-#ifdef BLD_NATIVE
+#ifndef BLD_NATIVE
 int LoadAnmRaceData(const char *file_name)
 {
     int (*bld_proc)(const char *file_name);
@@ -303,7 +303,7 @@ const char *GetRaceName(int index)
 * Module:                 Blade.exe
 * Entry point:            0x00428A22
 */
-#ifdef BLD_NATIVE
+#ifndef BLD_NATIVE
 int SaveAnmSoundData(const char *file_name, const char *race)
 {
     int (*bld_proc)(const char *file_name, const char *race);
@@ -315,7 +315,7 @@ int SaveAnmSoundData(const char *file_name, const char *race)
 * Module:                 Blade.exe
 * Entry point:            0x00428BEE
 */
-#ifdef BLD_NATIVE
+#ifndef BLD_NATIVE
 int LoadAnmSoundData(const char *file_name)
 {
     int (*bld_proc)(const char *file_name);
@@ -1333,7 +1333,7 @@ int GetParticleGType(
     {
         B_ParticleGType *particleType = gbl_particle_types.elements[index];
         *type = particleType->name.String();
-        *parent_type = B_3D_raster_device->bmp_name(particleType->bmp_handle);
+        *parent_type = B_3D_raster_device->BmpName(particleType->bmpHandle);
         *operation_type = particleType->operation_type;
         *duration = particleType->duration;
         return 1;
@@ -1654,15 +1654,15 @@ B_BitMap *RM_GetResource(const char *name)
 * Entry point:            0x0042B0F4
 */
 
-void UpdateAGTexture(long bmp_handle)
+void UpdateAGTexture(long bmpHandle)
 {
     B_AGTexture *texture;
     {
         for (unsigned int i = 0; i < gbl_ag_textures.size; i++)
         {
             B_AGTexture *currentTexture = gbl_ag_textures.elements[i];
-            long currentHandle = currentTexture->bmp_handle;
-            if (currentHandle == bmp_handle)
+            long currentHandle = currentTexture->bmpHandle;
+            if (currentHandle == bmpHandle)
             {
                 B_AGTexture *foundTexture = gbl_ag_textures.elements[i];
                 texture = foundTexture;
@@ -1855,7 +1855,7 @@ int WriteText(double x, double y, const char *text)
     int w, h;
     B_3D_raster_device->GetSize(w, h);
     B_3D_raster_device->SetPosition((w / 2) + w * x, (h / 2) + w * y);
-    B_3D_raster_device->write_text(text);
+    B_3D_raster_device->WriteText(text);
     return 0;
 }
 

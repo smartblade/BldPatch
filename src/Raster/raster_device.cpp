@@ -1,6 +1,6 @@
 
 #define BUILD_LIB
-#include <raster_device.h>
+#include "RasterDevice.h"
 #undef BUILD_LIB
 
 #include "raster_int.h"
@@ -11,8 +11,8 @@
 * Entry point:            0x10003550
 */
 
-void cls(boolean unknown1, boolean unknown2, boolean unknown3) {
-        return B_3D_raster_device->cls(unknown1, unknown2, unknown3);
+void Cls(byte r, byte g, byte b) {
+        return B_3D_raster_device->ClsRGB(r, g, b);
 }
 
 
@@ -21,8 +21,8 @@ void cls(boolean unknown1, boolean unknown2, boolean unknown3) {
 * Entry point:            0x10003574
 */
 
-void swap_buffers() {
-        return B_3D_raster_device->swap_buffers();
+void SwapBuffers() {
+        return B_3D_raster_device->SwapBuffers();
 }
 
 
@@ -31,8 +31,8 @@ void swap_buffers() {
 * Entry point:            0x10003589
 */
 
-long bmp_handle(const char *bmp_name) {
-        return B_3D_raster_device->bmp_handle(bmp_name);
+long BmpHandle(const char *bmpName) {
+        return B_3D_raster_device->BmpHandle(bmpName);
 }
 
 
@@ -41,8 +41,8 @@ long bmp_handle(const char *bmp_name) {
 * Entry point:            0x100035A3
 */
 
-const char *bmp_name(long handle) {
-        return B_3D_raster_device->bmp_name(handle);
+const char *BmpName(long handle) {
+        return B_3D_raster_device->BmpName(handle);
 }
 
 
@@ -51,8 +51,8 @@ const char *bmp_name(long handle) {
 * Entry point:            0x100035BD
 */
 
-int n_textures() {
-        return B_3D_raster_device->n_textures();
+int nTextures() {
+        return B_3D_raster_device->nTextures();
 }
 
 
@@ -61,9 +61,9 @@ int n_textures() {
 * Entry point:            0x100035D2
 */
 
-int get_texture_info(int index, int &w, int &h, int &depth) {
+int GetTextureInfo(int index, int &w, int &h, int &depth) {
 
-        return B_3D_raster_device->get_texture_info(
+        return B_3D_raster_device->GetTextureInfo(
                 index, w, h, depth
         );
 }
@@ -74,8 +74,8 @@ int get_texture_info(int index, int &w, int &h, int &depth) {
 * Entry point:            0x100035F8
 */
 
-void set_flags(long flags) {
-        B_3D_raster_device->set_flags(flags);
+void SetFlags(long flags) {
+        B_3D_raster_device->SetFlags(flags);
 }
 
 
@@ -96,8 +96,8 @@ void SetVideoSettings(float gamma, float contrast, float brightness) {
 * Entry point:            0x10003633
 */
 
-void set_gamma_correction(float gamma) {
-        B_3D_raster_device->set_gamma_correction(gamma);
+void SetGammaCorrection(float gamma) {
+        B_3D_raster_device->SetGammaCorrection(gamma);
 }
 
 
@@ -106,8 +106,8 @@ void set_gamma_correction(float gamma) {
 * Entry point:            0x1000364D
 */
 
-float get_gamma_correction() {
-        return B_3D_raster_device->get_gamma_correction();
+float GetGammaCorrection() {
+        return B_3D_raster_device->GetGammaCorrection();
 }
 
 
@@ -116,8 +116,8 @@ float get_gamma_correction() {
 * Entry point:            0x10003662
 */
 
-void set_contrast(float contrast) {
-        return B_3D_raster_device->set_contrast(contrast);
+void SetContrast(float contrast) {
+        return B_3D_raster_device->SetContrast(contrast);
 }
 
 
@@ -126,8 +126,8 @@ void set_contrast(float contrast) {
 * Entry point:            0x1000367C
 */
 
-float get_contrast() {
-        return B_3D_raster_device->get_contrast();
+float GetContrast() {
+        return B_3D_raster_device->GetContrast();
 }
 
 
@@ -136,8 +136,8 @@ float get_contrast() {
 * Entry point:            0x10003691
 */
 
-void set_brightness(float brightness) {
-        B_3D_raster_device->set_brightness(brightness);
+void SetBrightness(float brightness) {
+        B_3D_raster_device->SetBrightness(brightness);
 }
 
 
@@ -146,8 +146,8 @@ void set_brightness(float brightness) {
 * Entry point:            0x100036AB
 */
 
-float get_brightness() {
-        return B_3D_raster_device->get_brightness();
+float GetBrightness() {
+        return B_3D_raster_device->GetBrightness();
 }
 
 
@@ -402,8 +402,8 @@ float get_text_alpha() {
 * Entry point:            0x100039D8
 */
  
-int write_text(const char *text) {
-        return B_3D_raster_device->write_text(text);
+int WriteText(const char *text) {
+        return B_3D_raster_device->WriteText(text);
 }
 
 
@@ -557,8 +557,8 @@ void GetSize(int &w, int &h) {
 * Entry point:            0x10003BE6
 */
 
-int set_window_size(int w, int h) {
-        return B_3D_raster_device->set_window_size(w, h);
+int SetWindowSize(int w, int h) {
+        return B_3D_raster_device->SetWindowSize(w, h);
 }
 
 
@@ -587,8 +587,8 @@ int FullScreen() {
 * Entry point:            0x10003C40
 */
 
-int n_video_modes() {
-        return B_3D_raster_device->n_video_modes();
+int nVideoModes() {
+        return B_3D_raster_device->nVideoModes();
 }
 
 
@@ -597,12 +597,12 @@ int n_video_modes() {
 * Entry point:            0x10003C58
 */
 
-int get_video_mode_dscr(
-        int mode_index, int &depth, int &w, int &h, int &unknown,
+int GetVideoModeDscr(
+        int mode_index, int &depth, int &w, int &h, int &flags,
         int &frequency
 ) {
-        return B_3D_raster_device->get_video_mode_dscr(
-                mode_index, depth, w, h, unknown, frequency
+        return B_3D_raster_device->GetVideoModeDscr(
+                mode_index, depth, w, h, flags, frequency
         );
 }
 
@@ -612,8 +612,8 @@ int get_video_mode_dscr(
 * Entry point:            0x10003C88
 */
 
-int set_video_mode(int mode_index) {
-        return B_3D_raster_device->set_video_mode(mode_index);
+int SetVideoMode(int mode_index) {
+        return B_3D_raster_device->SetVideoMode(mode_index);
 }
 
 /*
@@ -643,8 +643,8 @@ int GetCurrentMode(
 * Entry point:            0x10003CFB
 */
 
-const char *class_id_name() {
-        return B_3D_raster_device->class_id_name();
+const char *ClassIdName() {
+        return B_3D_raster_device->ClassIdName();
 }
 
 

@@ -150,12 +150,12 @@ static PyMethodDef methods[] = {
 */
 
 PyObject *raster_Cls(PyObject *self, PyObject *args) {
-        int unknown1, unknown2, unknown3;
+        int r, g, b;
 
-        if (!PyArg_ParseTuple(args, "iii:Cls", &unknown1, &unknown2, &unknown3))
+        if (!PyArg_ParseTuple(args, "iii:Cls", &r, &g, &b))
                 return NULL;
 
-        cls(unknown1, unknown2, unknown3);
+        Cls(r, g, b);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -172,7 +172,7 @@ PyObject *raster_SwapBuffers(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":SwapBuffers"))
                 return NULL;
 
-        swap_buffers();
+        SwapBuffers();
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -185,13 +185,13 @@ PyObject *raster_SwapBuffers(PyObject *self, PyObject *args) {
 */
 
 PyObject *raster_BmpHandle(PyObject *self, PyObject *args) {
-        const char *bmp_name;
+        const char *bmpName;
         long handle;
 
-        if (!PyArg_ParseTuple(args, "s:BmpHandle", &bmp_name))
+        if (!PyArg_ParseTuple(args, "s:BmpHandle", &bmpName))
                 return NULL;
 
-        handle = bmp_handle(bmp_name);
+        handle = BmpHandle(bmpName);
 
         return Py_BuildValue("l", handle);
 }
@@ -209,7 +209,7 @@ PyObject *raster_BmpName(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "l:BmpName", &handle))
                 return NULL;
 
-        name = bmp_name(handle);
+        name = BmpName(handle);
 
         return Py_BuildValue("s", name);
 }
@@ -226,7 +226,7 @@ PyObject *raster_nTextures(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":nTextures"))
                 return NULL;
 
-        num_textures = n_textures();
+        num_textures = nTextures();
 
         return Py_BuildValue("i", num_textures);
 }
@@ -244,7 +244,7 @@ PyObject *raster_GetTextureInfo(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "i:GetTextureInfo", &index))
                 return NULL;
 
-        code = get_texture_info(index, w, h, depth); 
+        code = GetTextureInfo(index, w, h, depth);
 
         infoObj = Py_BuildValue("i", code);
 
@@ -306,7 +306,7 @@ PyObject *raster_SetGammaCorrection(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "f:SetGammaCorrection", &gamma))
                 return NULL;
 
-        set_gamma_correction(gamma);
+        SetGammaCorrection(gamma);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -323,7 +323,7 @@ PyObject *raster_GetGammaCorrection(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetGammaCorrection"))
                 return NULL;
 
-        return Py_BuildValue("f", get_gamma_correction());
+        return Py_BuildValue("f", GetGammaCorrection());
 }
 
 
@@ -338,7 +338,7 @@ PyObject *raster_SetContrast(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "f:SetContrast", &contrast))
                 return NULL;
 
-        set_contrast(contrast);
+        SetContrast(contrast);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -355,7 +355,7 @@ PyObject *raster_GetContrast(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetContrast"))
                 return NULL;
 
-        return Py_BuildValue("f", get_contrast());
+        return Py_BuildValue("f", GetContrast());
 }
 
 
@@ -370,7 +370,7 @@ PyObject *raster_SetBrightness(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "f:SetBrightness", &brightness))
                 return NULL;
 
-        set_brightness(brightness);
+        SetBrightness(brightness);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -387,7 +387,7 @@ PyObject *raster_GetBrightness(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":GetBrightness"))
                 return NULL;
 
-        return Py_BuildValue("f", get_brightness());
+        return Py_BuildValue("f", GetBrightness());
 }
 
 
@@ -422,7 +422,7 @@ PyObject *raster_SetFlags(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "l:SetFlags", &flags))
                 return NULL;
 
-        set_flags(flags);
+        SetFlags(flags);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -906,7 +906,7 @@ PyObject *raster_WriteText(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "s:WriteText", &text))
                 return NULL;
 
-        code = write_text(text);
+        code = WriteText(text);
 
         return Py_BuildValue("i", code);
 }
@@ -988,13 +988,13 @@ PyObject *raster_DrawImage(PyObject *self, PyObject *args) {
 */
 
 PyObject *raster_DrawBitmap(PyObject *self, PyObject *args) {
-        long bmp_handle;
+        long bmpHandle;
         int w, h;
 
-        if (!PyArg_ParseTuple(args, "lii:DrawBitmap", &bmp_handle, &w, &h))
+        if (!PyArg_ParseTuple(args, "lii:DrawBitmap", &bmpHandle, &w, &h))
                 return NULL;
 
-        draw_bitmap(bmp_handle, w, h);
+        draw_bitmap(bmpHandle, w, h);
 
         Py_INCREF(Py_None);
         return Py_None;
@@ -1224,7 +1224,7 @@ PyObject *raster_SetWindowSize(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "|ii:SetWindowSize", &w, &h))
                 return NULL;
 
-        code = set_window_size(w, h);
+        code = SetWindowSize(w, h);
 
         return Py_BuildValue("i", code);
 }
@@ -1284,7 +1284,7 @@ PyObject *raster_nVideoModes(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":nVideoModes"))
                 return NULL;
 
-        num_modes = n_video_modes();
+        num_modes = nVideoModes();
 
         return Py_BuildValue("i", num_modes);
 }
@@ -1297,14 +1297,14 @@ PyObject *raster_nVideoModes(PyObject *self, PyObject *args) {
 
 PyObject *raster_GetVideoModeDscr(PyObject *self, PyObject *args) {
         PyObject *modeDscrObj; 
-        PyObject *depthObj, *wObj, *hObj, *unknownObj, *frequencyObj;
-        int code, mode_index, depth, w, h, unknown, frequency;
+        PyObject *depthObj, *wObj, *hObj, *flagsObj, *frequencyObj;
+        int code, mode_index, depth, w, h, flags, frequency;
 
         if (!PyArg_ParseTuple(args, "i:GetVideoModeDscr", &mode_index))
                 return NULL;
 
-        code = get_video_mode_dscr(
-                mode_index, depth, w, h, unknown, frequency
+        code = GetVideoModeDscr(
+                mode_index, depth, w, h, flags, frequency
         );
 
         modeDscrObj = Py_BuildValue("i", code);
@@ -1318,8 +1318,8 @@ PyObject *raster_GetVideoModeDscr(PyObject *self, PyObject *args) {
         hObj = PyInt_FromLong(h);
         modeDscrObj = add_item(modeDscrObj, hObj);
 
-        unknownObj = PyInt_FromLong(unknown);
-        modeDscrObj = add_item(modeDscrObj, unknownObj);
+        flagsObj = PyInt_FromLong(flags);
+        modeDscrObj = add_item(modeDscrObj, flagsObj);
 
         frequencyObj = PyInt_FromLong(frequency);
         modeDscrObj = add_item(modeDscrObj, frequencyObj);
@@ -1339,7 +1339,7 @@ PyObject *raster_SetVideoMode(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, "i:SetVideoMode", &mode_index))
                 return NULL;
 
-        code = set_video_mode(mode_index);
+        code = SetVideoMode(mode_index);
 
         return Py_BuildValue("i", code);
 }
@@ -1395,7 +1395,7 @@ PyObject *raster_ClassIdName(PyObject *self, PyObject *args) {
         if (!PyArg_ParseTuple(args, ":ClassIdName"))
                 return NULL;
 
-        name = class_id_name();
+        name = ClassIdName();
 
         return Py_BuildValue("s", name);
 }
