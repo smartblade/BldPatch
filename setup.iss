@@ -28,6 +28,7 @@ DefaultDirName=C:\Games\Severence - Blade of Darkness
 DefaultGroupName={#BldName}
 DirExistsWarning=no
 DisableProgramGroupPage=yes
+AlwaysShowDirOnReadyPage=yes
 InfoBeforeFile=RELEASE_NOTES.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
