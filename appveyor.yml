@@ -37,7 +37,6 @@ for:
   - devenv /Upgrade tests/UnitTests.sln
   - xcopy /Y /E tests\gtest-v1-10 tests\gtest
   - msbuild %MSBUILD_ARGS% /p:Platform=Win32 tests/UnitTests.sln
-  - make_setup.bat
   test_script:
   - tests\%CONFIGURATION%\UnitTests.exe
 - matrix:
@@ -47,7 +46,6 @@ for:
   build_script:
   - devenv /Upgrade src/BOD.sln
   - msbuild %MSBUILD_ARGS% /p:Platform=Win32 src/BOD.sln
-  - make_setup.bat
 - matrix:
     only:
     - BUILD_TOOL: cmake
