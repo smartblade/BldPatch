@@ -47,6 +47,7 @@ Name: "{app}/{#BackupPath}"
 
 [Files]
 Source: "install/Bin/Blade.exe"; DestDir: "{app}/Bin"; BeforeInstall: BeforeBladeExeInstall; Flags: ignoreversion onlyifdestfileexists uninsneveruninstall
+Source: "install/Bin/Raster/rOpenGL.dll"; DestDir: "{app}/Bin/Raster"; BeforeInstall: BeforeROpenGLDllInstall; Flags: ignoreversion uninsneveruninstall
 Source: "RELEASE_NOTES.txt"; DestDir: "{app}/BldMystery"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -153,26 +154,46 @@ begin
   Result := True;
 end;
 
-procedure BeforeBladeExeInstall;
+procedure StoreBackupFile(FilePath, BackupName: String);
 var
-  BladeExePath, BackupPath: String;
+  BackupPath: String;
 begin
-  BladeExePath := ExpandConstant(CurrentFileName);
-  BackupPath := ExpandConstant('{app}/{#BackupPath}/Blade_v101.exe');
+  FilePath := ExpandConstant(FilePath);
+  BackupPath := ExpandConstant('{app}/{#BackupPath}/' + BackupName);
+  if not FileExists(FilePath) then
+    Exit;
   if FileExists(BackupPath) then
     Exit;
-  if not FileCopy(BladeExePath, BackupPath, True) then
-    RaiseException('Failed to backup Blade.exe')
+  if not FileCopy(FilePath, BackupPath, True) then
+    RaiseException('Failed to backup ' + FilePath);
+end;
+
+procedure BeforeBladeExeInstall;
+begin
+  StoreBackupFile(CurrentFileName, 'Blade_v101.exe');
+end;
+
+procedure BeforeROpenGLDllInstall;
+begin
+  StoreBackupFile(CurrentFileName, 'rOpenGL.dll');
+end;
+
+procedure RestoreFile(FileName, BackupName: String);
+var
+  FilePath, BackupPath: String;
+begin
+  BackupPath := ExpandConstant('{app}/{#BackupPath}/' + BackupName);
+  FilePath := ExpandConstant('{app}/' + FileName);
+  if not FileExists(BackupPath) then
+    Exit;
+  if not FileCopy(BackupPath, FilePath, False) then
+    RaiseException('Failed to restore ' + FileName);
+  if not DeleteFile(BackupPath) then
+    RaiseException('Failed to delete ' + BackupName);
 end;
 
 procedure InitializeUninstallProgressForm();
-var
-  BladeExePath, BackupPath: String;
 begin
-  BackupPath := ExpandConstant('{app}/{#BackupPath}/Blade_v101.exe');
-  BladeExePath := ExpandConstant('{app}/bin/Blade.exe');
-  if not FileCopy(BackupPath, BladeExePath, False) then
-    RaiseException('Failed to restore Blade.exe');
-  if not DeleteFile(BackupPath) then
-    RaiseException('Failed to delete Blade_v101.exe');
+  RestoreFile('bin/Blade.exe', 'Blade_v101.exe')
+  RestoreFile('bin/Raster/rOpenGL.dll', 'rOpenGL.dll')
 end;
