@@ -333,11 +333,11 @@ int TestClimb(B_Entity *entity, unsigned int eventIndex)
 
 void SetClimbingData(B_ClimbingData *climbingData)
 {
-    int foundedIndex = climbing_data_list.FindItemIndex(climbingData->Id());
+    int foundIndex = climbing_data_list.FindItemIndex(climbingData->Id());
     // If previous climbing was interrupted then we should remove existing data
-    if (foundedIndex != -1)
+    if (foundIndex != -1)
     {
-        climbing_data_list.Remove(foundedIndex, true);
+        climbing_data_list.Remove(foundIndex, true);
     }
     climbing_data_list.Append(climbingData);
 }
